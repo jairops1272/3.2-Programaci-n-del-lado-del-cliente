@@ -1,57 +1,39 @@
-const ipText = document.getElementById("ip");
-const continentText = document.getElementById("continent");
-const cityText = document.getElementById("city");
-const button = document.getElementById("btn");
+import { API } from "./api.js";
 
-const API_KEY = "7d1dcc5cf177489b924b4b974a1f0645";
+const miApi = new API("7d1dcc5cf177489b924b4b974a1f0645");
 
-// 1. Obtener IP pública
-async function obtenerIP() {
-    const response = await fetch("https://api.ipify.org/?format=json");
-    const data = await response.json();
-    return data.ip;
-}
-
-// 2. Obtener geolocalización
-async function obtenerGeolocalizacion(ip) {
-    const response = await fetch(
-        `https://api.ipgeolocation.io/v3/ipgeo?apiKey=${API_KEY}&ip=${ip}`
-    );
-
-    const data = await response.json();
-
-    // Mostrar en consola (TODO el JSON)
-    console.log("Geolocation completa:", data);
-
-    return data;
-}
-
-// 3. Función principal
 async function cargarDatos() {
     try {
-        ipText.textContent = "Cargando...";
-        continentText.textContent = "...";
-        cityText.textContent = "...";
+        const ip = await miApi.obtenerIP();
+        document.getElementById("ip").textContent = ip;
+        
+        const geo = await miApi.obtenerGeo(ip);
+        
+        // Llenar datos de la API
+        document.getElementById("continent").textContent = geo.continent_name;
+        document.getElementById("city").textContent = geo.city;
+        document.getElementById("idioma").textContent = geo.languages.split(',')[0];
+        
+        // Llenar datos de fecha y hora local
+        const ahora = new Date();
+        document.getElementById("hora").textContent = ahora.toLocaleTimeString();
+        document.getElementById("dia").textContent = ahora.getDate();
+        document.getElementById("mes").textContent = ahora.toLocaleString('es', { month: 'long' });
+        document.getElementById("anio").textContent = ahora.getFullYear();
+        
+        // Ciclo del día
+        const horaCero = ahora.getHours();
+        const ciclo = horaCero >= 6 && horaCero < 18 ? "Día ☀️" : "Noche 🌙";
+        document.getElementById("ciclo").textContent = ciclo;
 
-        const ip = await obtenerIP();
-        ipText.textContent = ip;
-
-        const geo = await obtenerGeolocalizacion(ip);
-
-        // Extraer datos específicos
-        continentText.textContent = geo.location.continent_name;
-        cityText.textContent = geo.location.city;
+        // Navegador y Dispositivo
+        document.getElementById("navegador").textContent = navigator.userAgentData ? navigator.userAgentData.brands[0].brand : "Navegador";
+        document.getElementById("dispositivo").textContent = navigator.platform;
 
     } catch (error) {
-        console.error("Error:", error);
-        ipText.textContent = "Error";
-        continentText.textContent = "Error";
-        cityText.textContent = "Error";
+        console.error("Error al cargar datos:", error);
     }
 }
 
-// Evento botón
-button.addEventListener("click", cargarDatos);
-
-// Cargar automáticamente
-cargarDatos();
+document.getElementById("btn").addEventListener("click", cargarDatos);
+window.addEventListener("load", cargarDatos);

@@ -3,21 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geolocalización IP</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Geo IP App Retro</title>
+
+    <link rel="icon" href="assets/favicon.ico">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Información de tu IP</h1>
-
-        <p><strong>IP:</strong> <span id="ip">Cargando...</span></p>
-        <p><strong>Continente:</strong> <span id="continent">---</span></p>
-        <p><strong>Ciudad:</strong> <span id="city">---</span></p>
-
-        <button id="btn">Actualizar</button>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand">🌐 Geo IP Retro App</span>
+        <span class="text-white">By: Jairo Pineda</span>
     </div>
+</nav>
 
-    <script src="js/app.js"></script>
+<div class="container mt-4 text-center">
+    <img src="assets/retro.png" width="120" class="mb-3">
+    <h2>Información del Cliente</h2>
+
+    <p><strong>IP:</strong> <span id="ip">Cargando...</span></p>
+    <p><strong>Continente:</strong> <span id="continent">--</span></p>
+    <p><strong>Ciudad:</strong> <span id="city">--</span></p>
+
+    <hr>
+
+    <p><strong>Hora:</strong> <span id="hora">--</span></p>
+    <p><strong>Idioma:</strong> <span id="idioma">--</span></p>
+    <p><strong>Día:</strong> <span id="dia">--</span></p>
+    <p><strong>Mes:</strong> <span id="mes">--</span></p>
+    <p><strong>Año:</strong> <span id="anio">--</span></p>
+    <p><strong>Ciclo del día:</strong> <span id="ciclo">--</span></p>
+    <p><strong>Navegador:</strong> <span id="navegador">--</span></p>
+    <p><strong>Dispositivo:</strong> <span id="dispositivo">--</span></p>
+
+    <button id="btn" class="btn btn-success mt-3">Actualizar Datos</button>
+</div>
+
+<footer class="bg-dark text-white text-center mt-4 p-3">
+    <p>Desarrollado por: Jairo Pineda | TecNM Pachuca</p>
+</footer>
+
+<script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
